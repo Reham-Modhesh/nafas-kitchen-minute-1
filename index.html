@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>٦٠ ثانية مدير مطبخ | بوث نفس</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --steel:#E3E6E1; --steel-dim:#CFD4CD;
+    --ink:#141C18; --ink-soft:#4A544E;
+    --teal:#0B4F45; --amber:#C97A06; --rust:#9B3D1E;
+    --white:#F7F8F6;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"IBM Plex Sans Arabic","Segoe UI",system-ui,sans-serif;
+    background:var(--steel);color:var(--ink);min-height:100vh;
+    padding:clamp(14px,3vw,36px);display:flex;justify-content:center;
+    font-size:clamp(15px,1.1vw,18px)}
+  .wrap{width:100%;max-width:1060px;display:grid;gap:clamp(14px,2vw,26px);
+    grid-template-columns:minmax(0,1.5fr) minmax(250px,.9fr);align-items:start}
+  @media (max-width:840px){.wrap{grid-template-columns:1fr}}
+
+  .brand{display:flex;align-items:baseline;gap:10px;margin-bottom:12px}
+  .brand b{font-size:1.15em;font-weight:700}
+  .brand span{color:var(--ink-soft);font-size:.85em}
+  .panel{background:var(--white);border:1px solid var(--steel-dim);border-radius:4px;
+    padding:clamp(18px,2.4vw,30px)}
+
+  h1{font-size:clamp(24px,3vw,38px);font-weight:600;line-height:1.35;max-width:24ch}
+  .lead{color:var(--ink-soft);margin-top:12px;line-height:1.7;max-width:46ch}
+  .rules{margin-top:18px;display:grid;gap:8px;max-width:46ch}
+  .rules div{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;line-height:1.6}
+  .rules i{font-style:normal;color:var(--teal);font-weight:700}
+  input{font-family:inherit;font-size:1.05em;padding:13px 14px;width:100%;max-width:300px;
+    border:1px solid var(--steel-dim);border-radius:3px;background:var(--steel);color:var(--ink)}
+  input:focus-visible{outline:2px solid var(--teal);outline-offset:1px}
+  label{display:block;font-weight:500;margin:22px 0 6px}
+  button{font-family:inherit;font-size:1em;font-weight:600;cursor:pointer;border:0;
+    padding:14px 24px;border-radius:3px;background:var(--teal);color:var(--white)}
+  button:hover{background:#0E6356}
+  button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+  .ghost{background:transparent;color:var(--ink-soft);border:1px solid var(--steel-dim)}
+  .ghost:hover{background:var(--steel);color:var(--ink)}
+  .msg{color:var(--amber);font-weight:500;min-height:1.4em;margin-top:10px}
+  .start{margin-top:20px}
+
+  /* شريط الوقت */
+  .clock{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+  .clock b{font-size:2.1em;font-weight:700;font-variant-numeric:tabular-nums;min-width:2.4em}
+  .bar{flex:1;height:6px;background:var(--steel-dim);border-radius:3px;overflow:hidden}
+  .bar i{display:block;height:100%;background:var(--teal);width:100%}
+  .clock.low b{color:var(--rust)}
+  .clock.low .bar i{background:var(--rust)}
+
+  /* بطاقة الموقف */
+  .ticket{border-top:3px solid var(--ink);padding-top:16px}
+  .ticket .no{color:var(--ink-soft);font-size:.85em;margin-bottom:10px}
+  .ticket p{font-size:clamp(19px,2.3vw,28px);font-weight:500;line-height:1.5;min-height:3.6em}
+  .choices{margin-top:22px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .choices button{padding:22px 16px;font-size:1.1em}
+  .choices .toss{background:var(--rust)}
+  .choices .toss:hover{background:#B04724}
+  .tally{margin-top:20px;display:flex;gap:18px;align-items:center;color:var(--ink-soft);
+    font-size:.9em;flex-wrap:wrap}
+  .tally button{margin-inline-start:auto;font-size:.85em;padding:8px 14px}
+
+  /* النتيجة */
+  .score{display:grid;gap:14px;margin:22px 0}
+  .score div{display:grid;grid-template-columns:3.4em 1fr;gap:14px;align-items:baseline;
+    padding-bottom:14px;border-bottom:1px solid var(--steel-dim)}
+  .score b{font-size:2.3em;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+  .score span{line-height:1.6}
+  .score .ok b{color:var(--teal)}
+  .score .waste b{color:var(--amber)}
+  .score .risk b{color:var(--rust)}
+  .punch{background:var(--steel);border-right:3px solid var(--teal);
+    padding:16px 18px;line-height:1.75;border-radius:3px}
+  .review{margin-top:20px}
+  .review h3{font-size:.95em;font-weight:700;margin-bottom:10px}
+  .review li{list-style:none;padding:12px 0;border-top:1px solid var(--steel-dim);line-height:1.6}
+  .review .tag{font-size:.8em;font-weight:600;padding:2px 8px;border-radius:3px;
+    margin-inline-start:8px;white-space:nowrap}
+  .review .tag.ok{background:var(--teal);color:var(--white)}
+  .review .tag.no{background:var(--rust);color:var(--white)}
+  .review em{display:block;font-style:normal;color:var(--ink-soft);font-size:.9em;margin-top:5px}
+  .actions{margin-top:22px;display:flex;gap:10px;flex-wrap:wrap}
+
+  /* اللوحة */
+  .board h2{font-size:1.05em;font-weight:700;margin-bottom:4px}
+  .board .count{color:var(--ink-soft);font-size:.85em;margin-bottom:16px}
+  ol{list-style:none;display:grid;gap:2px}
+  .board li{display:grid;grid-template-columns:2.2em 1fr auto;gap:10px;align-items:center;
+    padding:11px 10px;background:var(--steel);border-radius:3px}
+  .board .r{font-weight:700;color:var(--ink-soft);text-align:center}
+  .board .n{font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .board .s{font-size:.85em;color:var(--ink-soft)}
+  .board li.top{background:var(--teal);color:var(--white)}
+  .board li.top .r,.board li.top .s{color:rgba(247,248,246,.75)}
+  .board li.me{box-shadow:inset 0 0 0 2px var(--amber)}
+  .empty{color:var(--ink-soft);line-height:1.7;background:var(--steel);padding:16px;border-radius:3px}
+  .admin{margin-top:18px;border-top:1px solid var(--steel-dim);padding-top:14px}
+  .admin button{font-size:.8em;padding:8px 14px}
+  .hide{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+<main>
+  <div class="brand"><b>نَفَس</b><span>٦٠ ثانية مدير مطبخ</span></div>
+
+  <!-- البداية -->
+  <section class="panel" id="intro">
+    <h1>أنت مدير المطبخ. عندك ٢٠ ثانية لكل قرار.</h1>
+    <p class="lead">اثنتا عشرة بطاقة، ولكل بطاقة ٢٠ ثانية فقط. كل بطاقة موقف حقيقي من مطبخ تجاري، وقرارك: تقدّمه للزبون أو ترميه. بسرعة، الطلبات ما تنتظر.</p>
+    <div class="rules">
+      <div><i>+١</i><span>قرار صحيح</span></div>
+      <div><i>−١</i><span>رميت أكل سليم، وهذا هدر يطلع من جيبك</span></div>
+      <div><i>−٣</i><span>قدّمت أكل غير آمن، وهذا يوصل للزبون</span></div>
+      <div><i>٠</i><span>خلص الوقت وما قررت: البطاقة تفوتك</span></div>
+    </div>
+    <label for="name">اسمك</label>
+    <input id="name" type="text" maxlength="22" autocomplete="off" placeholder="اكتب اسمك">
+    <p class="msg" id="msg"></p>
+    <div class="start"><button type="button" id="go">ابدأ الدقيقة</button></div>
+  </section>
+
+  <!-- اللعب -->
+  <section class="panel hide" id="play">
+    <div class="clock" id="clock">
+      <b id="left">٢٠</b>
+      <span class="bar"><i id="fill"></i></span>
+    </div>
+    <div class="ticket">
+      <p class="no" id="cardNo"></p>
+      <p id="cardText"></p>
+    </div>
+    <div class="choices">
+      <button type="button" id="serve">قدّمه</button>
+      <button type="button" class="toss" id="toss">ارمِه</button>
+    </div>
+    <div class="tally">
+      <span id="tOk"></span><span id="tWaste"></span><span id="tRisk"></span>
+      <button type="button" class="ghost" id="stop">خلّصت، اعرض نتيجتي</button>
+    </div>
+  </section>
+
+  <!-- النتيجة -->
+  <section class="panel hide" id="result">
+    <h1 id="headline"></h1>
+    <div class="score">
+      <div class="ok"><b id="nOk">٠</b><span>قرار صحيح</span></div>
+      <div class="waste"><b id="nWaste">٠</b><span>طبق سليم رميته: هدر احترازي بلا سبب</span></div>
+      <div class="risk"><b id="nRisk">٠</b><span>طبق غير آمن قدّمته للزبون</span></div>
+    </div>
+    <p class="punch" id="punch"></p>
+    <div class="review"><h3>مراجعة قراراتك</h3><ol id="reviewList"></ol></div>
+    <div class="actions">
+      <button type="button" id="again">زائر جديد</button>
+    </div>
+  </section>
+</main>
+
+<aside class="panel board">
+  <h2>أفضل مديري المطبخ اليوم</h2>
+  <p class="count" id="count">ما لعب أحد بعد</p>
+  <ol id="list"></ol>
+  <div class="admin"><button type="button" class="ghost" id="clear">تصفير اللوحة</button></div>
+</aside>
+</div>
+
+<script>
+const KEY = 'nafas-kitchen-scores', PER_CARD = 20;
+
+// safe = الأكل سليم ويُقدّم | why = الجواب | nafas = وش كان يقول الجهاز
+const CARDS = [
+  { t:'دجاج مشوي على البوفيه المكشوف من ٣ ساعات. ريحته طبيعية تمامًا.',
+    safe:false, why:'أكثر من ساعتين في منطقة الخطر (٥–٦٠°م) يكفي لتكاثر البكتيريا، والريحة ما تتغير.',
+    nafas:'الجهاز يرصد ارتفاع الغازات قبل أي تغيّر تحسّه بأنفك.' },
+  { t:'أرز مطبوخ انتُسي على الطاولة من الليل. شكله وريحته عادية.',
+    safe:false, why:'الأرز المطبوخ في حرارة الغرفة بيئة مثالية لبكتيريا Bacillus cereus، وسمومها ما تروح بالتسخين.',
+    nafas:'قراءة مرتفعة من ساعات قبل أن يلاحظ أحد شيئًا.' },
+  { t:'لحم مفروم مبرّد على ٤°م، لونه من الداخل بنّي والريحة سليمة.',
+    safe:true, why:'تغيّر اللون أكسدة طبيعية للميوغلوبين وليس فسادًا. اللحم سليم.',
+    nafas:'قراءة طبيعية، كان بيمنعك ترميه.' },
+  { t:'سمك طازج الشكل، لكن فيه ريحة أمونيا خفيفة.',
+    safe:false, why:'ريحة الأمونيا مؤشر تحلل واضح. يُرمى مهما كان شكله.',
+    nafas:'حساس الأمونيا يلتقطها قبل أن يشمّها الإنسان.' },
+  { t:'سلطة مقطعة من أمس، مغلقة ومبرّدة على ٤°م، أوراقها ذابلة شوي.',
+    safe:true, why:'الذبول فقدان ماء لا علاقة له بالسلامة. سليمة.',
+    nafas:'قراءة طبيعية.' },
+  { t:'شحنة دجاج وصلت والثلج ذايب، وحرارة داخل الصندوق ١٤°م.',
+    safe:false, why:'سلسلة التبريد انقطعت. الشحنة تُرفض ولا تُدخل المخزن.',
+    nafas:'يسجّل الحرارة والغازات كدليل عند رفض الشحنة.' },
+  { t:'قطعة جبن شيدر صلب فيها عفن سطحي في زاوية منها.',
+    safe:true, why:'الجبن الصلب يُقطع منه ٢.٥ سم حول العفن ويُستخدم الباقي، والعفن ما ينفذ فيه.',
+    nafas:'قراءة طبيعية.' },
+  { t:'حساء طُبخ أمس، برّد بسرعة وحُفظ على ٤°م، وتسخّن اليوم لدرجة الغليان.',
+    safe:true, why:'التبريد السريع والتسخين الكامل إجراء صحيح. سليم.',
+    nafas:'قراءة طبيعية.' },
+  { t:'كيس خبز فيه حبة واحدة عليها نقطة عفن صغيرة.',
+    safe:false, why:'خيوط العفن تنتشر في الكيس قبل أن تُرى. الكيس كله يُرمى.',
+    nafas:'قراءة مرتفعة للغازات المتطايرة داخل الكيس.' },
+  { t:'صلصة طماطم معلّبة مفتوحة من ٥ أيام، محفوظة مغلقة في الثلاجة.',
+    safe:true, why:'الصلصة المفتوحة تصلح حتى أسبوع في الثلاجة. سليمة.',
+    nafas:'قراءة طبيعية.' },
+  { t:'بيض في الكرتون، حبة منه قشرتها مشقوقة.',
+    safe:false, why:'الشق يفتح طريقًا للسالمونيلا. البيضة المشقوقة تُرمى.',
+    nafas:'الجهاز يراقب البيئة، وهذي تُكشف بالفحص البصري.' },
+  { t:'حليب مبرّد وريحته سليمة، لكن تاريخ الاستخدام كان أمس.',
+    safe:false, why:'تاريخ «الاستخدام قبل» حد سلامة لا جودة، ولا يُتجاوز.',
+    nafas:'الجهاز مكمّل للتاريخ، ما يلغيه.' }
+];
+
+const $ = id => document.getElementById(id);
+const ar = n => String(n).replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
+let scores = [], me = null, armed = false;
+let deck = [], i = 0, log = [], ok = 0, waste = 0, risk = 0, missed = 0, left = PER_CARD, timer = null;
+
+async function load(){
+  try {
+    const r = await fetch('/api/scores', {cache:'no-store'});
+    scores = r.ok ? await r.json() : [];
+  } catch (e) { scores = []; }
+  drawBoard();
+}
+const ranked = () => [...scores].sort((a,b) => b.score - a.score);
+
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, ch => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'
+  }[ch]));
+}
+
+function drawBoard(){
+  const r = ranked();
+  $('count').textContent = r.length ? `${ar(r.length)} مشارك حتى الآن` : 'ما لعب أحد بعد';
+  if (!r.length){ $('list').innerHTML = '<li class="empty">أول اسم يدخل هنا.</li>'; return; }
+  const mine = me ? r.findIndex(e => e.id === me.id) : -1;
+  const show = r.slice(0,5);
+  if (mine > 4) show.push(r[mine]);
+  $('list').innerHTML = show.map(e => {
+    const k = r.indexOf(e);
+    const cls = [k===0?'top':'', me && e.id===me.id ? 'me':''].join(' ');
+    return `<li class="${cls}"><span class="r">${ar(k+1)}</span><span class="n">${escapeHtml(e.name)}</span>`
+         + `<span class="s">${ar(e.score)} نقطة</span></li>`;
+  }).join('');
+}
+
+function shuffle(a){ for (let k=a.length-1;k>0;k--){ const j=Math.floor(Math.random()*(k+1)); [a[k],a[j]]=[a[j],a[k]]; } return a; }
+
+$('go').addEventListener('click', () => {
+  const name = $('name').value.trim();
+  if (!name){ $('msg').textContent = 'اكتب اسمك أول.'; $('name').focus(); return; }
+  $('msg').textContent = '';
+  me = { id: Date.now(), name, score: 0 };
+  deck = shuffle([...CARDS]);
+  i = 0; log = []; ok = waste = risk = missed = 0;
+  $('intro').classList.add('hide'); $('play').classList.remove('hide');
+  startCard();
+});
+
+function startCard(){
+  clearInterval(timer);
+  if (i >= deck.length) return finish();
+  left = PER_CARD; tick(); showCard();
+  timer = setInterval(() => {
+    left--; tick();
+    if (left <= 0){ missed++; log.push({ c: deck[i], served: null, right: false }); i++; startCard(); }
+  }, 1000);
+}
+
+function tick(){
+  $('left').textContent = ar(Math.max(left,0));
+  $('fill').style.width = Math.max(left,0)/PER_CARD*100 + '%';
+  $('clock').classList.toggle('low', left <= 5);
+}
+
+function showCard(){
+  if (i >= deck.length) return finish();
+  $('cardNo').textContent = `موقف ${ar(i+1)} من ${ar(deck.length)}`;
+  $('cardText').textContent = deck[i].t;
+  $('tOk').textContent = `صح ${ar(ok)}`;
+  $('tWaste').textContent = `هدر ${ar(waste)}`;
+  $('tRisk').textContent = `خطر ${ar(risk)}`;
+}
+
+function answer(served){
+  const c = deck[i];
+  const right = (served === c.safe);
+  if (right) ok++; else if (served) risk++; else waste++;
+  log.push({ c, served, right });
+  i++;
+  startCard();
+}
+$('stop').addEventListener('click', () => finish());
+$('serve').addEventListener('click', () => answer(true));
+$('toss').addEventListener('click', () => answer(false));
+
+async function finish(){
+  clearInterval(timer);
+  const score = ok - waste - risk*3;
+  me.score = score;
+  scores.push(me);
+  let saved = true;
+  try {
+    const r = await fetch('/api/scores', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(me)
+    });
+    if (!r.ok) throw new Error('save failed');
+    scores = await r.json();
+  } catch(e){ saved = false; }
+
+  const total = log.filter(l => l.served !== null).length;
+  const word = total === 1 ? 'قرار واحد' : total === 2 ? 'قرارين' : `${ar(total)} قرارات`;
+  $('headline').textContent = total
+    ? `أخذت ${word} من ${ar(deck.length)} ${deck.length >= 11 ? 'بطاقة' : 'بطاقات'}، كلها بالتخمين.`
+    : 'خلص الوقت قبل أي قرار.';
+  $('nOk').textContent = ar(ok);
+  $('nWaste').textContent = ar(waste);
+  $('nRisk').textContent = ar(risk);
+
+  let punch;
+  if (risk) punch = `قدّمت ${ar(risk)} طبق غير آمن، والريحة والشكل كانا طبيعيين، وهذا بالضبط اللي ما تكشفه الحواس. نَفَس يقرأ الغازات ويعطيك تنبيه قبل القرار.`;
+  else if (waste) punch = `ما وصل شي غير آمن للزبون، لكن رميت ${ar(waste)} طبق سليم. هذا الهدر الاحترازي: ترمي لأنك ما تدري، لا لأنه فسد. نَفَس يعطيك رقم بدل الشك.`;
+  else if (total) punch = 'قرارات نظيفة، لكنك أخذت معلوماتك من بطاقة مكتوبة. في المطبخ ما فيه بطاقة، فيه تخمين. نَفَس هو البطاقة.';
+  else punch = 'في المطبخ الحقيقي الوقت يمشي وأنت تقرر. نَفَس يعطيك القراءة قبل ما تحتار.';
+  $('punch').textContent = punch;
+
+  $('reviewList').innerHTML = log.map(l =>
+    `<li><span>${l.c.t}</span><span class="tag ${l.right?'ok':'no'}">${l.served===null?'انتهى الوقت':(l.right?'صح':'غلط')}</span>`
+    + `<em>${l.c.why} ${l.c.nafas}</em></li>`).join('')
+    || '<li class="empty">ما فيه قرارات للمراجعة.</li>';
+
+  if (missed) $('punch').textContent += ` وفاتتك ${ar(missed)} بطاقة بدون قرار، وفي المطبخ التأخير قرار بنفسه.`;
+  if (!saved) $('punch').textContent += ' (ما انحفظت نتيجتك في اللوحة، اكتبها باليد.)';
+  drawBoard();
+  $('play').classList.add('hide'); $('result').classList.remove('hide');
+}
+
+$('again').addEventListener('click', () => {
+  me = null;
+  $('name').value = '';
+  $('result').classList.add('hide'); $('intro').classList.remove('hide');
+  drawBoard(); $('name').focus();
+});
+
+$('clear').addEventListener('click', async e => {
+  if (!armed){ armed = true; e.target.textContent = 'متأكد؟ اضغط مرة ثانية';
+    setTimeout(() => { armed = false; e.target.textContent = 'تصفير اللوحة'; }, 4000); return; }
+  scores = []; me = null; armed = false; e.target.textContent = 'تصفير اللوحة';
+  try {
+    const r = await fetch('/api/scores', {method:'DELETE'});
+    if (r.ok) scores = [];
+  } catch(err){}
+  drawBoard();
+});
+
+load();
+</script>
+</body>
+</html>
